@@ -1,47 +1,115 @@
 import java.util.*;
 public class ttt { 
+	static char[][] arr = { { '&', '&', '&' }, { '&', '&', '&'}, { '&', '&', '&'}}; 
+	static int i;
+	static int flg=0;
+	static int a,b;
+	static int bt=0;
+	static Scanner s=new Scanner(System.in);
 	public static void main(String[] args) 
-	{ 
-		char[][] arr = { { '&', '&', '&' }, { '&', '&', '&'}, { '&', '&', '&'}}; 
-		int i;
+	{ 	
+		int fin=0;
+		System.out.println("1-Player vs Player\n2-Player vs Bot");
+		int choice=s.nextInt();
+		if(choice==1){
+			fin=pvp();
+		}
+		else {
+			fin=pvb();
+		}
+
+		if(fin==-1){
+			System.out.println("Draw");
+		}
+	} 
+
+	static int pvp(){
 		char u1='X';
 		char u2='0';
-		int flg=0;
 		System.out.println("User 1 is 'X' and User 2 is '0'");
 		System.out.println("Input address of element to take turn i.e 0 0 will be the top left corner");
 		for(i=0;i<9;i++){	
 			if(i%2==0){
 				System.out.println("Turn for user 1");
 
-				uip(u1,arr);
+				uip(u1);
 				flg=chk(arr,u1);
 					if(flg==1){
 						System.out.println("User 1 wins");
 						prar(arr);
-						break;
-					}
-					if(flg==-1){
-						System.out.println("Draw");
-						break;
+						return 1;
 					}
 			}
 			else{
 				System.out.println("Turn for user 2");
-				uip(u2,arr);
+				uip(u2);
 				flg=chk(arr,u2);
 					if(flg==1){
 						System.out.println("User 2 wins");
 						prar(arr);
-						break;
-					}
-					if(flg==-1){
-						System.out.println("Draw");
-						break;
+						return 1;
 					}
 			}
 			prar(arr);
 		}
-	} 
+		return -1;
+	}
+
+	static int pvb(){
+		char u1='X';
+		char u2='0';
+		System.out.println("User 1 is 'X' and Bot is '0'");
+		System.out.println("Input address of element to take turn i.e 0 0 will be the top left corner");
+		for(i=0;i<9;i++){	
+			if(i%2==0){
+				System.out.println("Turn for user 1");
+
+				uip(u1);
+				flg=chk(arr,u1);
+					if(flg==1){
+						System.out.println("User 1 wins");
+						prar(arr);
+						return 1;
+					}
+			}
+			else{
+				System.out.println("Turn for Bot");
+				bot();
+				flg=chk(arr,u2);
+					if(flg==1){
+						System.out.println("Bot wins");
+						prar(arr);
+						return 1;
+					}
+			}
+			prar(arr);
+		}
+		return -1;
+	}
+	static void bot(){
+		bt=1;
+		a=(int)(Math.random() * 3);
+		b=(int)(Math.random() * 3);
+		if(checkBlank(a,b,bt)){
+		arr[a][b]='0';
+		bt=0;
+		}
+		else{
+			bot();
+		}
+	}
+
+	static boolean checkBlank(int a, int b,int bt) {
+        if (arr[a][b]!='X'&&arr[a][b]!='0'){
+            return true;
+        } else {
+			if(bt==0){
+			System.out.println("Space already taken, try again.");
+			return false;
+			}
+			else return false;
+        }
+    }
 
 	static int chk(char ck[][],char id){
 		int flag=0;
@@ -155,11 +223,14 @@ public class ttt {
 		}
 	}
 
-	static void uip(char u,char arr[][]){
-		Scanner s=new Scanner(System.in);
-		int a,b;
+	static void uip(char u){
 		a=s.nextInt();
 		b=s.nextInt();
-		arr[a][b]=u;
+		if(checkBlank(a,b,bt)){
+			arr[a][b]=u;
+			}
+			else{
+				uip(u);
+			}
 	}
 } 
