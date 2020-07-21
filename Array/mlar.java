@@ -17,6 +17,7 @@ public class mlar {
         int[] narr = remdup(arr);
         int num = findMth(narr, m);
         System.out.println(m + "th largest number in array is: " + num);
+        sc.close();
     }
 
     static int[] delete(int[] arr, int tar) {
