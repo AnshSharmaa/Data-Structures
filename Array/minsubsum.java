@@ -12,7 +12,7 @@ public class minsubsum {
             arr[i]=sc.nextInt();
         }
         int[] set = remdup(arr);
-        boolean[] bool = new boolean[set.length];
+        //boolean[] bool = new boolean[set.length];
         Arrays.sort(set);
         System.out.println(Arrays.toString(set));
         System.out.print("size of subset");
@@ -22,6 +22,7 @@ public class minsubsum {
             sum+=set[i];
         }
         System.out.println("Minimum sum of a subset for " + Arrays.toString(set) + " is: " + sum);
+        sc.close();
     }
 
     static int[] remdup(int[] arr){
