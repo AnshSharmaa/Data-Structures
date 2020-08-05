@@ -1,5 +1,7 @@
 public class linked{
-    //basic node creation
+    
+    linked s= new linked();
+
     class Node { 
         int val; 
         Node next; 
@@ -10,9 +12,51 @@ public class linked{
     public static int size=0;
     public static Node head = null;
     public static Node tail = null; 
-    
+
+    static void add(Node first, Node second) 
+    { 
+        Node res = null; 
+        Node prev = null; 
+        Node temp = null; 
+        int carry = 0, sum; 
+
+        while (first.next != null || second.next != null) { 
+            sum = carry + (first != null ? first.val : 0) 
+                  + (second != null ? second.val : 0); 
+  
+            carry = (sum >= 10) ? 1 : 0; 
+  
+            sum = sum % 10; 
+  
+            temp = new Node(sum); 
+  
+            if (res == null) { 
+                res = temp; 
+            } 
+
+            else { 
+                prev.next = temp; 
+            } 
+  
+
+            prev = temp; 
+  
+            if (first != null) { 
+                first = first.next; 
+            } 
+            if (second != null) { 
+                second = second.next; 
+            } 
+        } 
+  
+        if (carry > 0) { 
+            temp.next = new Node(carry); 
+        } 
+  
+    }
     public static void main(String[] args){
         linked l1 = new linked();
+        linked l2= new linked();
         l1.insert(1);
         l1.insert(2);
         l1.insert(42);
@@ -27,24 +71,26 @@ public class linked{
         l1.delbegin();
         l1.insertend(987);
         l1.display();
-    }
-    //begning
-    public void insertbeg(int data) {
-        Node ptr = head;
-        Node newNode = new Node(data);
-        newNode.next = ptr;
-        head = newNode;
-        System.out.println("Added " + data + " at beginning of list.");
-    }
+        add(l1,l2);
 
-    public void insertend(int data) {
-        Node ptr = tail;
-        Node newNode = new Node(data);
-        ptr.next = newNode;
-        tail = newNode;
-        System.out.println("Added " + data + " at end of list.");
     }
     
+    public void insertbeg(int val) {
+        Node ptr = head;
+        Node newNode = new Node(val);
+        newNode.next = ptr;
+        head = newNode;
+        System.out.println("Added " + val + " at beginning of list.");
+    }
+
+    public void insertend(int val) {
+        Node ptr = tail;
+        Node newNode = new Node(val);
+        ptr.next = newNode;
+        tail = newNode;
+        System.out.println("Added " + val + " at end of list.");
+    }
+
     public void delbegin(){
         if(head == null) {  
             System.out.println("Underflow");
